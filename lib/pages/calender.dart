@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderPage extends StatefulWidget {
@@ -26,7 +27,8 @@ class _CalenderPageState extends State<CalenderPage> {
 
     _selected = _focused;
     _eventsList = {
-      DateTime.now().subtract(Duration(days: 2)): ['Test A', 'Test B'],
+      DateTime.now().subtract(Duration(days: 5)): ['Test A', 'Test B'],
+      //FireStoreから引っ張ってきたdatetimeを付ける
       DateTime.now(): ['Test C', 'Test D', 'Test E', 'Test F'],
     };
   }
@@ -62,16 +64,16 @@ class _CalenderPageState extends State<CalenderPage> {
             },
             focusedDay: _focused,
           ),
-          //--追記--------------------------------------------------------------
           ListView(
             shrinkWrap: true,
             children: getEvent(_selected!)
                 .map((event) => ListTile(
+                      leading: Lottie.asset(
+                          'assets/119879-mascotas-aseguradas.json'),
                       title: Text(event.toString()),
                     ))
                 .toList(),
           )
-          //--------------------------------------------------------------------
         ]));
   }
 }
