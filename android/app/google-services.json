@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "739214005411",
+    "project_id": "share-house-97629",
+    "storage_bucket": "share-house-97629.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739214005411:android:ff339a1f917e28e68f5b16",
+        "android_client_info": {
+          "package_name": "com.example.share_house"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739214005411-6ntpem1phc63rt7dkhditit8av5033p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.share_house",
+            "certificate_hash": "60ab2c37821030ac382a3b8850cecfe27a73039b"
+          }
+        },
+        {
+          "client_id": "739214005411-nohkiesfnkbdtgihg9eekugv6ecqhd2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYS4zRPmOASpVauSD_aMPC4_uFia19O6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739214005411-nohkiesfnkbdtgihg9eekugv6ecqhd2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
