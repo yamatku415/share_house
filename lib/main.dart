@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_house/pages/calender.dart';
+import 'package:share_house/pages/calender_page.dart';
 import 'package:share_house/pages/login_page.dart';
 
 void main() async {
@@ -34,6 +34,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const CalenderPage();
+    return CalenderPage();
   }
 }

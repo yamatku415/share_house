@@ -1,17 +1,15 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:share_house/notifires/calender_notifier/calender_notifer.dart';
+import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalenderPage extends StatefulWidget {
-  const CalenderPage({Key? key}) : super(key: key);
+class CalenderPage extends ConsumerWidget {
+  CalenderPage({Key? key}) : super(key: key);
 
-  @override
-  _CalenderPageState createState() => _CalenderPageState();
-}
-
-class _CalenderPageState extends State<CalenderPage> {
   Map<DateTime, List> _eventsList = {};
 
   DateTime _focused = DateTime.now();
@@ -23,8 +21,6 @@ class _CalenderPageState extends State<CalenderPage> {
 
   @override
   void initState() {
-    super.initState();
-
     _selected = _focused;
     _eventsList = {
       DateTime.now().subtract(const Duration(days: 5)): ['Test A', 'Test B'],
@@ -34,7 +30,11 @@ class _CalenderPageState extends State<CalenderPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(calenderNotifierProvider);
+    final notifier = ref.watch(calenderNotifierProvider.notifier);
+    final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
+
     final _events = LinkedHashMap<DateTime, List>(
       equals: isSameDay,
       hashCode: getHashCode,
@@ -56,17 +56,23 @@ class _CalenderPageState extends State<CalenderPage> {
             },
             onDaySelected: (selected, focused) {
               if (!isSameDay(_selected, selected)) {
-                setState(() {
-                  _selected = selected;
-                  _focused = focused;
-                });
+                _selected = selected;
+                _focused = focused;
               }
             },
             focusedDay: _focused,
           ),
+          TextButton(
+              onPressed: () async {
+                addNotifier.addSchedule();
+                notifier.fetchScheduleList();
+              },
+              child: Text(state.memo ??
+                  "nasiy"
+                      "")),
           ListView(
             shrinkWrap: true,
-            children: getEvent(_selected!)
+            children: getEvent(DateTime.now())
                 .map((event) => ListTile(
                       leading: Lottie.asset(
                           'assets/119879-mascotas-aseguradas.json'),

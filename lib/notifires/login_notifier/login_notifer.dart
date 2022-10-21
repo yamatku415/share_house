@@ -7,10 +7,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:share_house/models/entity/user.dart';
 
 final loginNotifierProvider =
-    StateNotifierProvider<LoginNotifier, LoginUser>((ref) => LoginNotifier(''));
+    StateNotifierProvider<LoginNotifier, LoginUser>((ref) => LoginNotifier());
 
 class LoginNotifier extends StateNotifier<LoginUser> {
-  LoginNotifier(state) : super(const LoginUser());
+  LoginNotifier() : super(const LoginUser());
 
   //ここにlogin周りの処理を書く
 
