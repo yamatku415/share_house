@@ -27,7 +27,7 @@ class _CalenderPageState extends State<CalenderPage> {
 
     _selected = _focused;
     _eventsList = {
-      DateTime.now().subtract(Duration(days: 5)): ['Test A', 'Test B'],
+      DateTime.now().subtract(const Duration(days: 5)): ['Test A', 'Test B'],
       //FireStoreから引っ張ってきたdatetimeを付ける
       DateTime.now(): ['Test C', 'Test D', 'Test E', 'Test F'],
     };

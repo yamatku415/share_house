@@ -15,27 +15,28 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$User {
-  String get userName => throw _privateConstructorUsedError;
+mixin _$LoginUser {
+  String? get userName => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $LoginUserCopyWith<LoginUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res>;
-  $Res call({String userName});
+abstract class $LoginUserCopyWith<$Res> {
+  factory $LoginUserCopyWith(LoginUser value, $Res Function(LoginUser) then) =
+      _$LoginUserCopyWithImpl<$Res>;
+  $Res call({String? userName});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$LoginUserCopyWithImpl<$Res> implements $LoginUserCopyWith<$Res> {
+  _$LoginUserCopyWithImpl(this._value, this._then);
 
-  final User _value;
+  final LoginUser _value;
   // ignore: unused_field
-  final $Res Function(User) _then;
+  final $Res Function(LoginUser) _then;
 
   @override
   $Res call({
@@ -45,59 +46,61 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       userName: userName == freezed
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
-      __$$_UserCopyWithImpl<$Res>;
+abstract class _$$_LoginUserCopyWith<$Res> implements $LoginUserCopyWith<$Res> {
+  factory _$$_LoginUserCopyWith(
+          _$_LoginUser value, $Res Function(_$_LoginUser) then) =
+      __$$_LoginUserCopyWithImpl<$Res>;
   @override
-  $Res call({String userName});
+  $Res call({String? userName});
 }
 
 /// @nodoc
-class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
-    implements _$$_UserCopyWith<$Res> {
-  __$$_UserCopyWithImpl(_$_User _value, $Res Function(_$_User) _then)
-      : super(_value, (v) => _then(v as _$_User));
+class __$$_LoginUserCopyWithImpl<$Res> extends _$LoginUserCopyWithImpl<$Res>
+    implements _$$_LoginUserCopyWith<$Res> {
+  __$$_LoginUserCopyWithImpl(
+      _$_LoginUser _value, $Res Function(_$_LoginUser) _then)
+      : super(_value, (v) => _then(v as _$_LoginUser));
 
   @override
-  _$_User get _value => super._value as _$_User;
+  _$_LoginUser get _value => super._value as _$_LoginUser;
 
   @override
   $Res call({
     Object? userName = freezed,
   }) {
-    return _then(_$_User(
+    return _then(_$_LoginUser(
       userName: userName == freezed
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_User implements _User {
-  const _$_User({required this.userName});
+class _$_LoginUser implements _LoginUser {
+  const _$_LoginUser({this.userName});
 
   @override
-  final String userName;
+  final String? userName;
 
   @override
   String toString() {
-    return 'User(userName: $userName)';
+    return 'LoginUser(userName: $userName)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_User &&
+            other is _$_LoginUser &&
             const DeepCollectionEquality().equals(other.userName, userName));
   }
 
@@ -107,16 +110,17 @@ class _$_User implements _User {
 
   @JsonKey(ignore: true)
   @override
-  _$$_UserCopyWith<_$_User> get copyWith =>
-      __$$_UserCopyWithImpl<_$_User>(this, _$identity);
+  _$$_LoginUserCopyWith<_$_LoginUser> get copyWith =>
+      __$$_LoginUserCopyWithImpl<_$_LoginUser>(this, _$identity);
 }
 
-abstract class _User implements User {
-  const factory _User({required final String userName}) = _$_User;
+abstract class _LoginUser implements LoginUser {
+  const factory _LoginUser({final String? userName}) = _$_LoginUser;
 
   @override
-  String get userName;
+  String? get userName;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
+  _$$_LoginUserCopyWith<_$_LoginUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }
