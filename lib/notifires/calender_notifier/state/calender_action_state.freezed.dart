@@ -17,9 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CalenderActionState {
   String? get id => throw _privateConstructorUsedError;
-  DateTime? get date => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
   String? get memo => throw _privateConstructorUsedError;
+  DateTime? get selected => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CalenderActionStateCopyWith<CalenderActionState> get copyWith =>
@@ -31,7 +32,12 @@ abstract class $CalenderActionStateCopyWith<$Res> {
   factory $CalenderActionStateCopyWith(
           CalenderActionState value, $Res Function(CalenderActionState) then) =
       _$CalenderActionStateCopyWithImpl<$Res>;
-  $Res call({String? id, DateTime? date, String? icon, String? memo});
+  $Res call(
+      {String? id,
+      DateTime date,
+      String? icon,
+      String? memo,
+      DateTime? selected});
 }
 
 /// @nodoc
@@ -49,6 +55,7 @@ class _$CalenderActionStateCopyWithImpl<$Res>
     Object? date = freezed,
     Object? icon = freezed,
     Object? memo = freezed,
+    Object? selected = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -58,7 +65,7 @@ class _$CalenderActionStateCopyWithImpl<$Res>
       date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -67,6 +74,10 @@ class _$CalenderActionStateCopyWithImpl<$Res>
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String?,
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -78,7 +89,12 @@ abstract class _$$_CalenderActionStateCopyWith<$Res>
           $Res Function(_$_CalenderActionState) then) =
       __$$_CalenderActionStateCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, DateTime? date, String? icon, String? memo});
+  $Res call(
+      {String? id,
+      DateTime date,
+      String? icon,
+      String? memo,
+      DateTime? selected});
 }
 
 /// @nodoc
@@ -98,6 +114,7 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
     Object? date = freezed,
     Object? icon = freezed,
     Object? memo = freezed,
+    Object? selected = freezed,
   }) {
     return _then(_$_CalenderActionState(
       id: id == freezed
@@ -107,7 +124,7 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
       date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -116,6 +133,10 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String?,
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -123,20 +144,23 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_CalenderActionState implements _CalenderActionState {
-  const _$_CalenderActionState({this.id, this.date, this.icon, this.memo});
+  const _$_CalenderActionState(
+      {this.id, required this.date, this.icon, this.memo, this.selected});
 
   @override
   final String? id;
   @override
-  final DateTime? date;
+  final DateTime date;
   @override
   final String? icon;
   @override
   final String? memo;
+  @override
+  final DateTime? selected;
 
   @override
   String toString() {
-    return 'CalenderActionState(id: $id, date: $date, icon: $icon, memo: $memo)';
+    return 'CalenderActionState(id: $id, date: $date, icon: $icon, memo: $memo, selected: $selected)';
   }
 
   @override
@@ -147,7 +171,8 @@ class _$_CalenderActionState implements _CalenderActionState {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.date, date) &&
             const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.memo, memo));
+            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(other.selected, selected));
   }
 
   @override
@@ -156,7 +181,8 @@ class _$_CalenderActionState implements _CalenderActionState {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(date),
       const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(memo));
+      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(selected));
 
   @JsonKey(ignore: true)
   @override
@@ -168,18 +194,21 @@ class _$_CalenderActionState implements _CalenderActionState {
 abstract class _CalenderActionState implements CalenderActionState {
   const factory _CalenderActionState(
       {final String? id,
-      final DateTime? date,
+      required final DateTime date,
       final String? icon,
-      final String? memo}) = _$_CalenderActionState;
+      final String? memo,
+      final DateTime? selected}) = _$_CalenderActionState;
 
   @override
   String? get id;
   @override
-  DateTime? get date;
+  DateTime get date;
   @override
   String? get icon;
   @override
   String? get memo;
+  @override
+  DateTime? get selected;
   @override
   @JsonKey(ignore: true)
   _$$_CalenderActionStateCopyWith<_$_CalenderActionState> get copyWith =>

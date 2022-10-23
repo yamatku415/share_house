@@ -7,13 +7,22 @@ import 'package:share_house/notifires/calender_notifier/calender_notifer.dart';
 import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalenderPage extends ConsumerWidget {
+class CalenderPage extends ConsumerStatefulWidget {
   CalenderPage({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<CalenderPage> createState() => _CalenderPageState();
+}
+
+class _CalenderPageState extends ConsumerState<CalenderPage> {
+  //ここで使用している変数類をfreezedでまとめる？
 
   Map<DateTime, List> _eventsList = {};
 
   DateTime _focused = DateTime.now();
+
   DateTime? _selected;
+  //↑をfreezedで準備するか検討　別のクラスでも検討する
 
   int getHashCode(DateTime key) {
     return key.day * 1000000 + key.month * 10000 + key.year;
@@ -21,16 +30,18 @@ class CalenderPage extends ConsumerWidget {
 
   @override
   void initState() {
+    super.initState();
+
     _selected = _focused;
     _eventsList = {
-      DateTime.now().subtract(const Duration(days: 5)): ['Test A', 'Test B'],
+      DateTime.now().subtract(Duration(days: 5)): ['Test A', 'Test B'],
       //FireStoreから引っ張ってきたdatetimeを付ける
       DateTime.now(): ['Test C', 'Test D', 'Test E', 'Test F'],
     };
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final state = ref.watch(calenderNotifierProvider);
     final notifier = ref.watch(calenderNotifierProvider.notifier);
     final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
@@ -50,14 +61,17 @@ class CalenderPage extends ConsumerWidget {
           TableCalendar(
             firstDay: DateTime.utc(2022, 4, 1),
             lastDay: DateTime.utc(2025, 12, 31),
-            eventLoader: getEvent, //追記
+            eventLoader: getEvent,
             selectedDayPredicate: (day) {
               return isSameDay(_selected, day);
             },
             onDaySelected: (selected, focused) {
               if (!isSameDay(_selected, selected)) {
-                _selected = selected;
-                _focused = focused;
+                //ここでカレンダーのwidgetを作成すればseectedなどcopywith出来るのではないか？notifiereのクラスに移動？
+                setState(() {
+                  _selected = selected;
+                  _focused = focused;
+                });
               }
             },
             focusedDay: _focused,
@@ -75,7 +89,7 @@ class CalenderPage extends ConsumerWidget {
             children: getEvent(DateTime.now())
                 .map((event) => ListTile(
                       leading: Lottie.asset(
-                          'assets/119879-mascotas-aseguradas.json'),
+                          state.icon ?? 'assets/10484-heart-fluttering.json'),
                       title: Text(event.toString()),
                     ))
                 .toList(),

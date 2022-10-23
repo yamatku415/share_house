@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:share_house/notifires/calender_notifier/state/calender_action_state.dart';
 
 final calenderNotifierProvider =
@@ -9,7 +10,7 @@ final calenderNotifierProvider =
         (ref) => CalenderNotifier());
 
 class CalenderNotifier extends StateNotifier<CalenderActionState> {
-  CalenderNotifier() : super(const CalenderActionState());
+  CalenderNotifier() : super(CalenderActionState(date: DateTime.now()));
 
   final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
       .collection('users')
@@ -18,21 +19,28 @@ class CalenderNotifier extends StateNotifier<CalenderActionState> {
       .snapshots();
 
   List<dynamic>? schedule;
+  DateTime dateTime = DateTime.now();
+
+  static final _dateFormatter = DateFormat("yyyy/MM/dd");
 
   void fetchScheduleList() {
     _usersStream.listen((QuerySnapshot snapshot) {
       snapshot.docs.map((DocumentSnapshot document) {
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
+        final date = data['date'];
+        if (date is String) {
+          dateTime = _dateFormatter.parseStrict(date);
+        }
+
         state = state.copyWith(
             id: document.id,
-            date: data['date'],
+            date: dateTime,
             icon: data['icon'],
             memo: data['memo']);
-
-        //firestoreからは引っ張れている。
-        //あとはdateがdetestumpで帰ってくるから変換する。
       }).toList();
     });
   }
+
+  //ここでカレンダーのwidgetを作成すればseectedなどcopywith出来るのではないか？
 }

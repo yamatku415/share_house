@@ -8,7 +8,7 @@ final scheduleAddNotifierProvider =
         (ref) => ScheduleAddNotifier());
 
 class ScheduleAddNotifier extends StateNotifier<CalenderActionState> {
-  ScheduleAddNotifier() : super(const CalenderActionState());
+  ScheduleAddNotifier() : super(CalenderActionState(date: DateTime.now()));
 
   void addSchedule() {
     FirebaseFirestore.instance
