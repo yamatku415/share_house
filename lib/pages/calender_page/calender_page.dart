@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:share_house/notifires/calender_notifier/calender_notifer.dart';
+import 'package:share_house/models/repository/calender_repository.dart';
 import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -56,7 +56,7 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
     }
 
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: Text(state.memo ?? '')),
         body: Column(children: [
           TableCalendar(
             firstDay: DateTime.utc(2022, 4, 1),
@@ -80,19 +80,22 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
               onPressed: () async {
                 addNotifier.addSchedule();
                 notifier.fetchScheduleList();
+                print('いいいいい${state.calenderList.toString()}いいいいい');
               },
               child: Text(state.memo ??
                   "nasiy"
                       "")),
-          ListView(
-            shrinkWrap: true,
-            children: getEvent(DateTime.now())
-                .map((event) => ListTile(
-                      leading: Lottie.asset(
-                          state.icon ?? 'assets/10484-heart-fluttering.json'),
-                      title: Text(event.toString()),
-                    ))
-                .toList(),
+          SingleChildScrollView(
+            child: ListView(
+              shrinkWrap: true,
+              children: getEvent(DateTime.now())
+                  .map((event) => ListTile(
+                        leading: Lottie.asset(
+                            state.icon ?? 'assets/10484-heart-fluttering.json'),
+                        title: Text(event.toString()),
+                      ))
+                  .toList(),
+            ),
           )
         ]));
   }
