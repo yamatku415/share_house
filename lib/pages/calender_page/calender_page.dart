@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:share_house/models/repository/calender_repository.dart';
 import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
 import 'package:share_house/pages/calender_page/state/calender_action_state.dart';
@@ -16,6 +17,9 @@ class CalenderPage extends ConsumerStatefulWidget {
 
 class _CalenderPageState extends ConsumerState<CalenderPage> {
   //ここで使用している変数類をfreezedでまとめる？
+
+  static final _dateFormatter = DateFormat("yyyy/MM/dd");
+
   List<CalenderActionState> calenderList = [];
 
   Map<DateTime, List> _eventsList = {};
@@ -32,13 +36,8 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
   @override
   void initState() {
     super.initState();
-    CalenderNotifier().fetchScheduleList();
+
     _selected = _focused;
-    _eventsList = {
-      DateTime.now().subtract(Duration(days: 5)): ['Test A', 'Test B'],
-      //FireStoreから引っ張ってきたdatetimeを付ける
-      DateTime.now(): ['Test C', 'Test D', 'Test E', 'Test F'],
-    };
   }
 
   @override
@@ -58,16 +57,51 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
 
     return Scaffold(
         appBar: AppBar(title: Text(state.memo ?? '')),
-        body: ListView.builder(
-          itemCount: state.calenderList?.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                  '${state.calenderList?[index].memo}${state.calenderList?[index].icon}'),
-              subtitle: Text(state.calenderList?[index].date ?? 'dd'),
-              //カレンダーリストには入っている、一旦リストに入れてから、そこからfirebaseの値を取り出さないと複数は取ってこれない。
-            );
-          },
-        ));
+        body: Column(children: [
+          TableCalendar(
+            firstDay: DateTime.utc(2022, 4, 1),
+            lastDay: DateTime.utc(2025, 12, 31),
+            eventLoader: getEvent,
+            selectedDayPredicate: (day) {
+              return isSameDay(_selected, day);
+            },
+            onDaySelected: (selected, focused) {
+              if (!isSameDay(_selected, selected)) {
+                setState(() {
+                  _selected = selected;
+                  _focused = focused;
+                });
+              }
+            },
+            focusedDay: _focused,
+          ),
+          TextButton(
+              onPressed: () async {
+                calenderList = await notifier.fetchScheduleList();
+                for (int i = 0; i < calenderList.length; i++) {
+                  _eventsList = {
+                    _dateFormatter
+                        .parseStrict(calenderList[i].date ?? '2022/10/25'): [
+                      calenderList[i].memo
+                    ]
+                  };
+                  //ここで数日分の日にちが来てしまっているからバグっている
+                  //日にちをそのひのものだけと一致するようにする
+                }
+              },
+              child: Text(state.memo ??
+                  "nasiy"
+                      "")),
+          SingleChildScrollView(
+            child: ListView(
+              shrinkWrap: true,
+              children: getEvent(_selected!)
+                  .map((event) => ListTile(
+                        title: Text(event.toString()),
+                      ))
+                  .toList(),
+            ),
+          )
+        ]));
   }
 }

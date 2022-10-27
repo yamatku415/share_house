@@ -11,7 +11,7 @@ class CalenderActionState with _$CalenderActionState {
     String? date,
     String? icon,
     String? memo,
-    List<CalenderActionState>? calenderList,
+    List<CalenderActionState>? calenderList, //別のリストstateをnotifireの作成
   }) = _CalenderActionState;
   //string icon の文字列と、assetsのパスを一致させてassetsを表示させる箇所で直接呼び出せるように実装
   factory CalenderActionState.fromJson(Map<String, dynamic> json) =>

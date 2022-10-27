@@ -24,8 +24,6 @@ class CalenderNotifier extends StateNotifier<CalenderActionState> {
     for (var doc in snapshot.docs) {
       Map<String, dynamic> data = doc.data();
       calenderList.add(CalenderActionState.fromJson(data));
-
-      //この書き方ではだめ
     }
 
     state = state.copyWith(calenderList: calenderList);
