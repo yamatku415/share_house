@@ -2,9 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import 'package:share_house/models/repository/calender_repository.dart';
 import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
+import 'package:share_house/pages/calender_page/state/calender_action_state.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderPage extends ConsumerStatefulWidget {
@@ -16,6 +16,7 @@ class CalenderPage extends ConsumerStatefulWidget {
 
 class _CalenderPageState extends ConsumerState<CalenderPage> {
   //ここで使用している変数類をfreezedでまとめる？
+  List<CalenderActionState> calenderList = [];
 
   Map<DateTime, List> _eventsList = {};
 
@@ -31,7 +32,7 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
   @override
   void initState() {
     super.initState();
-
+    CalenderNotifier().fetchScheduleList();
     _selected = _focused;
     _eventsList = {
       DateTime.now().subtract(Duration(days: 5)): ['Test A', 'Test B'],
@@ -57,46 +58,16 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
 
     return Scaffold(
         appBar: AppBar(title: Text(state.memo ?? '')),
-        body: Column(children: [
-          TableCalendar(
-            firstDay: DateTime.utc(2022, 4, 1),
-            lastDay: DateTime.utc(2025, 12, 31),
-            eventLoader: getEvent,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selected, day);
-            },
-            onDaySelected: (selected, focused) {
-              if (!isSameDay(_selected, selected)) {
-                //ここでカレンダーのwidgetを作成すればseectedなどcopywith出来るのではないか？notifiereのクラスに移動？
-                setState(() {
-                  _selected = selected;
-                  _focused = focused;
-                });
-              }
-            },
-            focusedDay: _focused,
-          ),
-          TextButton(
-              onPressed: () async {
-                addNotifier.addSchedule();
-                notifier.fetchScheduleList();
-                print('いいいいい${state.calenderList.toString()}いいいいい');
-              },
-              child: Text(state.memo ??
-                  "nasiy"
-                      "")),
-          SingleChildScrollView(
-            child: ListView(
-              shrinkWrap: true,
-              children: getEvent(DateTime.now())
-                  .map((event) => ListTile(
-                        leading: Lottie.asset(
-                            state.icon ?? 'assets/10484-heart-fluttering.json'),
-                        title: Text(event.toString()),
-                      ))
-                  .toList(),
-            ),
-          )
-        ]));
+        body: ListView.builder(
+          itemCount: state.calenderList?.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(
+                  '${state.calenderList?[index].memo}${state.calenderList?[index].icon}'),
+              subtitle: Text(state.calenderList?[index].date ?? 'dd'),
+              //カレンダーリストには入っている、一旦リストに入れてから、そこからfirebaseの値を取り出さないと複数は取ってこれない。
+            );
+          },
+        ));
   }
 }

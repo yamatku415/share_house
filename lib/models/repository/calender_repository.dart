@@ -1,4 +1,3 @@
-//カレンダーを表示させるメソッド類
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,9 +10,9 @@ final calenderNotifierProvider =
         (ref) => CalenderNotifier());
 
 class CalenderNotifier extends StateNotifier<CalenderActionState> {
-  CalenderNotifier() : super(CalenderActionState());
+  CalenderNotifier() : super(const CalenderActionState());
 
-  Future<void> fetchScheduleList() async {
+  Future<List<CalenderActionState>> fetchScheduleList() async {
     List<CalenderActionState> calenderList = [];
 
     final snapshot = await FirebaseFirestore.instance
@@ -25,11 +24,12 @@ class CalenderNotifier extends StateNotifier<CalenderActionState> {
     for (var doc in snapshot.docs) {
       Map<String, dynamic> data = doc.data();
       calenderList.add(CalenderActionState.fromJson(data));
-      state = state.copyWith(
-          date: data['date'], icon: data['icon'], memo: data['memo']);
+
       //この書き方ではだめ
     }
-  }
 
-//ここでカレンダーのwidgetを作成すればseectedなどcopywith出来るのではないか？
+    state = state.copyWith(calenderList: calenderList);
+
+    return calenderList;
+  }
 }
