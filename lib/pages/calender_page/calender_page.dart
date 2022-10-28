@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:share_house/models/repository/calender_repository.dart';
 import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
 import 'package:share_house/pages/calender_page/state/calender_action_state.dart';
@@ -18,9 +17,9 @@ class CalenderPage extends ConsumerStatefulWidget {
 class _CalenderPageState extends ConsumerState<CalenderPage> {
   //ここで使用している変数類をfreezedでまとめる？
 
-  static final _dateFormatter = DateFormat("yyyy/MM/dd");
-
   List<CalenderActionState> calenderList = [];
+
+  DateTime KK = DateTime.now();
 
   Map<DateTime, List> _eventsList = {};
 
@@ -78,16 +77,21 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
           TextButton(
               onPressed: () async {
                 calenderList = await notifier.fetchScheduleList();
-                for (int i = 0; i < calenderList.length; i++) {
-                  _eventsList = {
-                    _dateFormatter
-                        .parseStrict(calenderList[i].date ?? '2022/10/25'): [
-                      calenderList[i].memo
-                    ]
-                  };
-                  //ここで数日分の日にちが来てしまっているからバグっている
-                  //日にちをそのひのものだけと一致するようにする
-                }
+
+                _eventsList = Map.fromIterables(
+                    calenderList
+                        .map((e) => DateTime.parse(e.date ?? ''))
+                        .toList(),
+                    calenderList.map((e) => [e.memo]).toList());
+                //日にちは取れている、のであとは日付選択したときのメモをリストで表示出来るようにする。（もしかしたららmemoをlist<String>にする必要あり？
+
+                // for (int i = 0; i < calenderList.length; i++) {
+                //   KK = DateTime.parse(calenderList[i].date ?? '');
+                //
+                //   jj = [calenderList[i].memo];
+                //
+                //   _eventsList = {KK: jj};
+                // kkとJJがリスト（複数ないといけない？）
               },
               child: Text(state.memo ??
                   "nasiy"
