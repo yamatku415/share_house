@@ -8,7 +8,7 @@ final scheduleAddNotifierProvider =
         (ref) => ScheduleAddNotifier());
 
 class ScheduleAddNotifier extends StateNotifier<CalenderActionState> {
-  ScheduleAddNotifier() : super(CalenderActionState());
+  ScheduleAddNotifier() : super(CalenderActionState(date: DateTime.now()));
 
   void addSchedule() {
     FirebaseFirestore.instance
@@ -18,7 +18,7 @@ class ScheduleAddNotifier extends StateNotifier<CalenderActionState> {
         .add({
       'date': DateTime.now().toString(),
       'icon': 'assets/119879-mascotas-aseguradas.json',
-      'memo': 'あそび',
+      'memo': '運動',
     });
   }
 }

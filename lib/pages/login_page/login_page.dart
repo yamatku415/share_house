@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_house/models/repository/calender_repository.dart';
 import 'package:share_house/notifires/login_notifier/login_notifer.dart';
@@ -15,30 +14,27 @@ class LoginPage extends ConsumerWidget {
     final userState = ref.watch(loginNotifierProvider);
     final notifier = ref.watch(loginNotifierProvider.notifier);
     final calenderNotifier = ref.watch(calenderNotifierProvider.notifier);
-    final state = ref.watch(calenderNotifierProvider);
 
     // TODO: implement build
     return Scaffold(
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(userState.userName ?? 'ログインできてないよハゲ'),
-            SignInButton(
-              buttonType: ButtonType.google,
-              onPressed: () async {
-                if (await notifier.login()) {
-                  calenderNotifier.fetchScheduleList();
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(userState.userName ?? '未ログイン状態'),
+          SignInButton(
+            buttonType: ButtonType.google,
+            onPressed: () async {
+              if (await notifier.login()) {
+                calenderNotifier.fetchScheduleList();
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return CalenderPage();
-                  }));
-                }
-              },
-            ),
-          ],
-        ),
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return CalenderPage();
+                }));
+              }
+            },
+          ),
+        ],
       ),
     );
   }

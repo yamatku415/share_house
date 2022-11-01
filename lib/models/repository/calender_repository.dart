@@ -10,7 +10,7 @@ final calenderNotifierProvider =
         (ref) => CalenderNotifier());
 
 class CalenderNotifier extends StateNotifier<CalenderActionState> {
-  CalenderNotifier() : super(const CalenderActionState());
+  CalenderNotifier() : super(CalenderActionState(date: DateTime.now()));
 
   Future<List<CalenderActionState>> fetchScheduleList() async {
     List<CalenderActionState> calenderList = [];
@@ -23,6 +23,7 @@ class CalenderNotifier extends StateNotifier<CalenderActionState> {
 
     for (var doc in snapshot.docs) {
       Map<String, dynamic> data = doc.data();
+
       calenderList.add(CalenderActionState.fromJson(data));
     }
 

@@ -20,7 +20,8 @@ CalenderActionState _$CalenderActionStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CalenderActionState {
-  String? get date => throw _privateConstructorUsedError;
+  @DateTimeConverter()
+  DateTime get date => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
   String? get memo => throw _privateConstructorUsedError;
   List<CalenderActionState>? get calenderList =>
@@ -38,7 +39,7 @@ abstract class $CalenderActionStateCopyWith<$Res> {
           CalenderActionState value, $Res Function(CalenderActionState) then) =
       _$CalenderActionStateCopyWithImpl<$Res>;
   $Res call(
-      {String? date,
+      {@DateTimeConverter() DateTime date,
       String? icon,
       String? memo,
       List<CalenderActionState>? calenderList});
@@ -64,7 +65,7 @@ class _$CalenderActionStateCopyWithImpl<$Res>
       date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime,
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -89,7 +90,7 @@ abstract class _$$_CalenderActionStateCopyWith<$Res>
       __$$_CalenderActionStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? date,
+      {@DateTimeConverter() DateTime date,
       String? icon,
       String? memo,
       List<CalenderActionState>? calenderList});
@@ -117,7 +118,7 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
       date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime,
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -138,7 +139,7 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CalenderActionState implements _CalenderActionState {
   const _$_CalenderActionState(
-      {this.date,
+      {@DateTimeConverter() required this.date,
       this.icon,
       this.memo,
       final List<CalenderActionState>? calenderList})
@@ -148,7 +149,8 @@ class _$_CalenderActionState implements _CalenderActionState {
       _$$_CalenderActionStateFromJson(json);
 
   @override
-  final String? date;
+  @DateTimeConverter()
+  final DateTime date;
   @override
   final String? icon;
   @override
@@ -202,7 +204,7 @@ class _$_CalenderActionState implements _CalenderActionState {
 
 abstract class _CalenderActionState implements CalenderActionState {
   const factory _CalenderActionState(
-      {final String? date,
+      {@DateTimeConverter() required final DateTime date,
       final String? icon,
       final String? memo,
       final List<CalenderActionState>? calenderList}) = _$_CalenderActionState;
@@ -211,7 +213,8 @@ abstract class _CalenderActionState implements CalenderActionState {
       _$_CalenderActionState.fromJson;
 
   @override
-  String? get date;
+  @DateTimeConverter()
+  DateTime get date;
   @override
   String? get icon;
   @override

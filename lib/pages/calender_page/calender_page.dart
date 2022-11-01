@@ -77,12 +77,11 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
           TextButton(
               onPressed: () async {
                 calenderList = await notifier.fetchScheduleList();
-
-                _eventsList = Map.fromIterables(
-                    calenderList
-                        .map((e) => DateTime.parse(e.date ?? ''))
-                        .toList(),
-                    calenderList.map((e) => [e.memo]).toList());
+                for (int i = 0; i < calenderList.length; i++) {
+                  _eventsList = Map.fromIterables(
+                      calenderList.map((e) => e.date).toList(),
+                      calenderList.map((e) => [e.memo]).toList());
+                }
                 //日にちは取れている、のであとは日付選択したときのメモをリストで表示出来るようにする。（もしかしたららmemoをlist<String>にする必要あり？
 
                 // for (int i = 0; i < calenderList.length; i++) {
@@ -92,18 +91,24 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
                 //
                 //   _eventsList = {KK: jj};
                 // kkとJJがリスト（複数ないといけない？）
+                print(_eventsList);
+                print('いいいい${_events}');
+                addNotifier.addSchedule();
               },
               child: Text(state.memo ??
                   "nasiy"
                       "")),
           SingleChildScrollView(
-            child: ListView(
-              shrinkWrap: true,
-              children: getEvent(_selected!)
-                  .map((event) => ListTile(
-                        title: Text(event.toString()),
-                      ))
-                  .toList(),
+            child: SizedBox(
+              height: 200,
+              child: ListView(
+                shrinkWrap: true,
+                children: getEvent(_selected!)
+                    .map((event) => ListTile(
+                          title: Text(event.toString()),
+                        ))
+                    .toList(),
+              ),
             ),
           )
         ]));

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:share_house/util/datetime_converter.dart';
 
 part 'calender_action_state.freezed.dart';
 part 'calender_action_state.g.dart';
@@ -8,7 +9,7 @@ part 'calender_action_state.g.dart';
 ///firebase取得
 class CalenderActionState with _$CalenderActionState {
   const factory CalenderActionState({
-    String? date,
+    @DateTimeConverter() required DateTime date,
     String? icon,
     String? memo,
     List<CalenderActionState>? calenderList, //別のリストstateをnotifireの作成

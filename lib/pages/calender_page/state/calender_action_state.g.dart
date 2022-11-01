@@ -9,7 +9,7 @@ part of 'calender_action_state.dart';
 _$_CalenderActionState _$$_CalenderActionStateFromJson(
         Map<String, dynamic> json) =>
     _$_CalenderActionState(
-      date: json['date'] as String?,
+      date: const DateTimeConverter().fromJson(json['date'] as String),
       icon: json['icon'] as String?,
       memo: json['memo'] as String?,
       calenderList: (json['calenderList'] as List<dynamic>?)
@@ -20,7 +20,7 @@ _$_CalenderActionState _$$_CalenderActionStateFromJson(
 Map<String, dynamic> _$$_CalenderActionStateToJson(
         _$_CalenderActionState instance) =>
     <String, dynamic>{
-      'date': instance.date,
+      'date': const DateTimeConverter().toJson(instance.date),
       'icon': instance.icon,
       'memo': instance.memo,
       'calenderList': instance.calenderList,
