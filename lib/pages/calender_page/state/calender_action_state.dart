@@ -9,9 +9,10 @@ part 'calender_action_state.g.dart';
 ///firebase取得
 class CalenderActionState with _$CalenderActionState {
   const factory CalenderActionState({
-    @DateTimeConverter() required DateTime date,
-    String? icon,
-    String? memo,
+    @DateTimeConverter() DateTime? createdAt,
+    Map<String, String>? memoIcon,
+    String? userId,
+    String? schedules,
     List<CalenderActionState>? calenderList, //別のリストstateをnotifireの作成
   }) = _CalenderActionState;
   //string icon の文字列と、assetsのパスを一致させてassetsを表示させる箇所で直接呼び出せるように実装

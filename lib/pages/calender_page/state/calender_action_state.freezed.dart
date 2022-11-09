@@ -21,9 +21,10 @@ CalenderActionState _$CalenderActionStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CalenderActionState {
   @DateTimeConverter()
-  DateTime get date => throw _privateConstructorUsedError;
-  String? get icon => throw _privateConstructorUsedError;
-  String? get memo => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  Map<String, String>? get memoIcon => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  String? get schedules => throw _privateConstructorUsedError;
   List<CalenderActionState>? get calenderList =>
       throw _privateConstructorUsedError;
 
@@ -39,9 +40,10 @@ abstract class $CalenderActionStateCopyWith<$Res> {
           CalenderActionState value, $Res Function(CalenderActionState) then) =
       _$CalenderActionStateCopyWithImpl<$Res>;
   $Res call(
-      {@DateTimeConverter() DateTime date,
-      String? icon,
-      String? memo,
+      {@DateTimeConverter() DateTime? createdAt,
+      Map<String, String>? memoIcon,
+      String? userId,
+      String? schedules,
       List<CalenderActionState>? calenderList});
 }
 
@@ -56,23 +58,28 @@ class _$CalenderActionStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? date = freezed,
-    Object? icon = freezed,
-    Object? memo = freezed,
+    Object? createdAt = freezed,
+    Object? memoIcon = freezed,
+    Object? userId = freezed,
+    Object? schedules = freezed,
     Object? calenderList = freezed,
   }) {
     return _then(_value.copyWith(
-      date: date == freezed
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      memoIcon: memoIcon == freezed
+          ? _value.memoIcon
+          : memoIcon // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      memo: memo == freezed
-          ? _value.memo
-          : memo // ignore: cast_nullable_to_non_nullable
+      schedules: schedules == freezed
+          ? _value.schedules
+          : schedules // ignore: cast_nullable_to_non_nullable
               as String?,
       calenderList: calenderList == freezed
           ? _value.calenderList
@@ -90,9 +97,10 @@ abstract class _$$_CalenderActionStateCopyWith<$Res>
       __$$_CalenderActionStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@DateTimeConverter() DateTime date,
-      String? icon,
-      String? memo,
+      {@DateTimeConverter() DateTime? createdAt,
+      Map<String, String>? memoIcon,
+      String? userId,
+      String? schedules,
       List<CalenderActionState>? calenderList});
 }
 
@@ -109,23 +117,28 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? date = freezed,
-    Object? icon = freezed,
-    Object? memo = freezed,
+    Object? createdAt = freezed,
+    Object? memoIcon = freezed,
+    Object? userId = freezed,
+    Object? schedules = freezed,
     Object? calenderList = freezed,
   }) {
     return _then(_$_CalenderActionState(
-      date: date == freezed
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      icon: icon == freezed
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      memoIcon: memoIcon == freezed
+          ? _value._memoIcon
+          : memoIcon // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      memo: memo == freezed
-          ? _value.memo
-          : memo // ignore: cast_nullable_to_non_nullable
+      schedules: schedules == freezed
+          ? _value.schedules
+          : schedules // ignore: cast_nullable_to_non_nullable
               as String?,
       calenderList: calenderList == freezed
           ? _value._calenderList
@@ -139,22 +152,33 @@ class __$$_CalenderActionStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CalenderActionState implements _CalenderActionState {
   const _$_CalenderActionState(
-      {@DateTimeConverter() required this.date,
-      this.icon,
-      this.memo,
+      {@DateTimeConverter() this.createdAt,
+      final Map<String, String>? memoIcon,
+      this.userId,
+      this.schedules,
       final List<CalenderActionState>? calenderList})
-      : _calenderList = calenderList;
+      : _memoIcon = memoIcon,
+        _calenderList = calenderList;
 
   factory _$_CalenderActionState.fromJson(Map<String, dynamic> json) =>
       _$$_CalenderActionStateFromJson(json);
 
   @override
   @DateTimeConverter()
-  final DateTime date;
+  final DateTime? createdAt;
+  final Map<String, String>? _memoIcon;
   @override
-  final String? icon;
+  Map<String, String>? get memoIcon {
+    final value = _memoIcon;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
-  final String? memo;
+  final String? userId;
+  @override
+  final String? schedules;
   final List<CalenderActionState>? _calenderList;
   @override
   List<CalenderActionState>? get calenderList {
@@ -166,7 +190,7 @@ class _$_CalenderActionState implements _CalenderActionState {
 
   @override
   String toString() {
-    return 'CalenderActionState(date: $date, icon: $icon, memo: $memo, calenderList: $calenderList)';
+    return 'CalenderActionState(createdAt: $createdAt, memoIcon: $memoIcon, userId: $userId, schedules: $schedules, calenderList: $calenderList)';
   }
 
   @override
@@ -174,9 +198,10 @@ class _$_CalenderActionState implements _CalenderActionState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CalenderActionState &&
-            const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other._memoIcon, _memoIcon) &&
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.schedules, schedules) &&
             const DeepCollectionEquality()
                 .equals(other._calenderList, _calenderList));
   }
@@ -185,9 +210,10 @@ class _$_CalenderActionState implements _CalenderActionState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(_memoIcon),
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(schedules),
       const DeepCollectionEquality().hash(_calenderList));
 
   @JsonKey(ignore: true)
@@ -204,9 +230,10 @@ class _$_CalenderActionState implements _CalenderActionState {
 
 abstract class _CalenderActionState implements CalenderActionState {
   const factory _CalenderActionState(
-      {@DateTimeConverter() required final DateTime date,
-      final String? icon,
-      final String? memo,
+      {@DateTimeConverter() final DateTime? createdAt,
+      final Map<String, String>? memoIcon,
+      final String? userId,
+      final String? schedules,
       final List<CalenderActionState>? calenderList}) = _$_CalenderActionState;
 
   factory _CalenderActionState.fromJson(Map<String, dynamic> json) =
@@ -214,11 +241,13 @@ abstract class _CalenderActionState implements CalenderActionState {
 
   @override
   @DateTimeConverter()
-  DateTime get date;
+  DateTime? get createdAt;
   @override
-  String? get icon;
+  Map<String, String>? get memoIcon;
   @override
-  String? get memo;
+  String? get userId;
+  @override
+  String? get schedules;
   @override
   List<CalenderActionState>? get calenderList;
   @override

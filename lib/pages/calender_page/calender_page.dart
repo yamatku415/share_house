@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_house/models/repository/calender_repository.dart';
 import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
-import 'package:share_house/pages/calender_page/state/calender_action_state.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderPage extends ConsumerStatefulWidget {
@@ -17,9 +16,7 @@ class CalenderPage extends ConsumerStatefulWidget {
 class _CalenderPageState extends ConsumerState<CalenderPage> {
   //ここで使用している変数類をfreezedでまとめる？
 
-  List<CalenderActionState> calenderList = [];
-
-  DateTime KK = DateTime.now();
+  Map<DateTime, List<Map<String, String>>> calenderList = {};
 
   Map<DateTime, List> _eventsList = {};
 
@@ -45,72 +42,68 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
     final notifier = ref.watch(calenderNotifierProvider.notifier);
     final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
 
-    final _events = LinkedHashMap<DateTime, List>(
-      equals: isSameDay,
-      hashCode: getHashCode,
-    )..addAll(_eventsList);
-
-    List getEvent(DateTime day) {
-      return _events[day] ?? [];
-    }
-
     return Scaffold(
-        appBar: AppBar(title: Text(state.memo ?? '')),
-        body: Column(children: [
-          TableCalendar(
-            firstDay: DateTime.utc(2022, 4, 1),
-            lastDay: DateTime.utc(2025, 12, 31),
-            eventLoader: getEvent,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selected, day);
-            },
-            onDaySelected: (selected, focused) {
-              if (!isSameDay(_selected, selected)) {
-                setState(() {
-                  _selected = selected;
-                  _focused = focused;
-                });
-              }
-            },
-            focusedDay: _focused,
-          ),
-          TextButton(
-              onPressed: () async {
-                calenderList = await notifier.fetchScheduleList();
-                for (int i = 0; i < calenderList.length; i++) {
-                  _eventsList = Map.fromIterables(
-                      calenderList.map((e) => e.date).toList(),
-                      calenderList.map((e) => [e.memo]).toList());
-                }
-                //日にちは取れている、のであとは日付選択したときのメモをリストで表示出来るようにする。（もしかしたららmemoをlist<String>にする必要あり？
+        appBar: AppBar(title: const Text('')),
+        body: ref.watch(scheduleProvider).when(
+            data: (calenderList) {
+              final _events = LinkedHashMap<DateTime, List>(
+                equals: isSameDay,
+                hashCode: getHashCode,
+              )..addAll(calenderList);
 
-                // for (int i = 0; i < calenderList.length; i++) {
-                //   KK = DateTime.parse(calenderList[i].date ?? '');
-                //
-                //   jj = [calenderList[i].memo];
-                //
-                //   _eventsList = {KK: jj};
-                // kkとJJがリスト（複数ないといけない？）
-                print(_eventsList);
-                print('いいいい${_events}');
-                addNotifier.addSchedule();
-              },
-              child: Text(state.memo ??
-                  "nasiy"
-                      "")),
-          SingleChildScrollView(
-            child: SizedBox(
-              height: 200,
-              child: ListView(
-                shrinkWrap: true,
-                children: getEvent(_selected!)
-                    .map((event) => ListTile(
-                          title: Text(event.toString()),
-                        ))
-                    .toList(),
-              ),
-            ),
-          )
-        ]));
+              List getEvent(DateTime day) {
+                return _events[day] ?? [];
+              }
+
+              return Column(children: [
+                TableCalendar(
+                  firstDay: DateTime.utc(2022, 4, 1),
+                  lastDay: DateTime.utc(2025, 12, 31),
+                  eventLoader: getEvent,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selected, day);
+                  },
+                  onDaySelected: (selected, focused) {
+                    if (!isSameDay(_selected, selected)) {
+                      setState(() {
+                        _selected = selected;
+                        _focused = focused;
+                      });
+                    }
+                  },
+                  focusedDay: _focused,
+                ),
+                TextButton(
+                    onPressed: () async {
+                      calenderList = await notifier.fetchScheduleList();
+
+                      setState(() {});
+
+                      // for (int i = 0; i < calenderList.length; i++) {
+                      //   _eventsList = ;
+                      //
+                      //   print(calenderList);
+                      //   print('いいいい${_events}');
+                      // }
+                      // // addNotifier.addSchedule();
+                    },
+                    child: Text("nasiy")),
+                SingleChildScrollView(
+                  child: SizedBox(
+                    height: 200,
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: getEvent(_selected!)
+                          .map((event) => ListTile(
+                                title: Text(event.toString()),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                )
+              ]);
+            },
+            error: (e, st) => Container(),
+            loading: () => const CircularProgressIndicator()));
   }
 }
