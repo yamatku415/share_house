@@ -5,18 +5,16 @@ import 'package:share_house/models/entity/calender/day_schedule/schedule.dart';
 
 class CalenderNotifier extends StateNotifier<Schedule> {
   CalenderNotifier() : super(const Schedule());
-
+  Map<DateTime, List> _eventsList = {};
+  List memoIconList = [];
   Future<void> createdList(Schedule test) async {
-    print('いいい${test.idList!.length}');
-
     test.idList?.forEach((e) {
       state = state.copyWith(elementIdList: e);
-      print('ううう${e}');
-      fetchDaySchedule();
+      fetchDaySchedule(test);
     });
   }
 
-  Future<void> fetchDaySchedule() async {
+  Future<void> fetchDaySchedule(Schedule test) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('daySchedule')
         .doc(state.elementIdList)
@@ -24,7 +22,12 @@ class CalenderNotifier extends StateNotifier<Schedule> {
 
     Map<String, dynamic>? data = snapshot.data();
     final dd = DaySchedule.fromJson(data!);
-    print('えええ${dd}');
+
+    print('ううう${dd}');
+    memoIconList.add([dd.icon, dd.memo]);
+    _eventsList.addAll({DateTime.parse(test.targetDay ?? ''): memoIconList});
+
+    print('えええ${_eventsList}');
   }
 }
 //firebaseの値の処理
