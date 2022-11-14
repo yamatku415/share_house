@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_house/models/repository/calender_repository.dart';
+import 'package:share_house/models/repository/schedule_repository.dart';
 import 'package:share_house/notifires/login_notifier/login_notifer.dart';
 import 'package:share_house/pages/calender_page/calender_page.dart';
 import 'package:sign_button/constants.dart';
@@ -25,7 +25,7 @@ class LoginPage extends ConsumerWidget {
             buttonType: ButtonType.google,
             onPressed: () async {
               if (await notifier.login()) {
-                calenderNotifier.fetchScheduleList();
+                // calenderNotifier.fetchScheduleList();
 
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {

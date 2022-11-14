@@ -2,8 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_house/models/repository/calender_repository.dart';
-import 'package:share_house/notifires/schedule_add_notifirer/schedule_add_notifirer.dart';
+import 'package:share_house/models/repository/schedule_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderPage extends ConsumerStatefulWidget {
@@ -14,16 +13,25 @@ class CalenderPage extends ConsumerStatefulWidget {
 }
 
 class _CalenderPageState extends ConsumerState<CalenderPage> {
-  //ここで使用している変数類をfreezedでまとめる？
+  //直接この値を使用する
 
-  Map<DateTime, List<Map<String, String>>> calenderList = {};
-
-  Map<DateTime, List> _eventsList = {};
+  Map<DateTime, List<String>> _eventsList = {
+    DateTime.parse('2022-11-10 11:19:49.334354'): [
+      'ｍｍお',
+      'memo内容',
+    ],
+    DateTime.parse('2022-11-10 11:24:49.978137'): [
+      'ｍｍ',
+      'memo内容',
+      'a'
+          ''
+    ]
+  };
+  //もとからの物
 
   DateTime _focused = DateTime.now();
 
   DateTime? _selected;
-  //↑をfreezedで準備するか検討　別のクラスでも検討する
 
   int getHashCode(DateTime key) {
     return key.day * 1000000 + key.month * 10000 + key.year;
@@ -40,16 +48,16 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(calenderNotifierProvider);
     final notifier = ref.watch(calenderNotifierProvider.notifier);
-    final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
+    // final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
 
     return Scaffold(
         appBar: AppBar(title: const Text('')),
         body: ref.watch(scheduleProvider).when(
             data: (calenderList) {
-              final _events = LinkedHashMap<DateTime, List>(
+              final _events = LinkedHashMap<DateTime, List<String>>(
                 equals: isSameDay,
                 hashCode: getHashCode,
-              )..addAll(calenderList);
+              )..addAll(_eventsList);
 
               List getEvent(DateTime day) {
                 return _events[day] ?? [];
@@ -75,17 +83,8 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
                 ),
                 TextButton(
                     onPressed: () async {
-                      calenderList = await notifier.fetchScheduleList();
-
-                      setState(() {});
-
-                      // for (int i = 0; i < calenderList.length; i++) {
-                      //   _eventsList = ;
-                      //
-                      //   print(calenderList);
-                      //   print('いいいい${_events}');
-                      // }
-                      // // addNotifier.addSchedule();
+                      await notifier
+                          .fetchScheduleList(); // addNotifier.addSchedule();
                     },
                     child: Text("nasiy")),
                 SingleChildScrollView(
@@ -95,6 +94,7 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
                       shrinkWrap: true,
                       children: getEvent(_selected!)
                           .map((event) => ListTile(
+                                leading: Text('icon'),
                                 title: Text(event.toString()),
                               ))
                           .toList(),

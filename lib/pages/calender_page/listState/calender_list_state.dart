@@ -1,5 +1,5 @@
 // import 'package:freezed_annotation/freezed_annotation.dart';
-// import 'package:share_house/pages/calender_page/state/calender_action_state.dart';
+// import 'package:share_house/pages/calender_page/state/day_schedule.dart';
 //
 // @freezed
 // class CalenderListState with _$CalenderListState {

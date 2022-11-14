@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:share_house/models/entity/user.dart';
+import 'package:share_house/models/entity/user/user.dart';
 
 final loginNotifierProvider =
     StateNotifierProvider<LoginNotifier, LoginUser>((ref) => LoginNotifier());
