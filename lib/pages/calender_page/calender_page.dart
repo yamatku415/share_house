@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_house/models/entity/calender/day_schedule.dart';
 import 'package:share_house/models/repository/schedule_repository.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -15,19 +16,7 @@ class CalenderPage extends ConsumerStatefulWidget {
 class _CalenderPageState extends ConsumerState<CalenderPage> {
   //直接この値を使用する
 
-  Map<DateTime, List<String>> _eventsList = {
-    DateTime.parse('2022-11-10 11:19:49.334354'): [
-      'ｍｍお',
-      'memo内容',
-    ],
-    DateTime.parse('2022-11-10 11:24:49.978137'): [
-      'ｍｍ',
-      'memo内容',
-      'a'
-          ''
-    ]
-  };
-  //もとからの物
+  final Map<DateTime, List<DaySchedule>> eventsList = {};
 
   DateTime _focused = DateTime.now();
 
@@ -53,12 +42,12 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
     return Scaffold(
         appBar: AppBar(title: const Text('')),
         body: ref.watch(scheduleProvider).when(
-            data: (calenderList) {
-              final _events = LinkedHashMap<DateTime, List<String>>(
+            data: (eventsList) {
+              final _events = LinkedHashMap<DateTime, List<DaySchedule>>(
                 equals: isSameDay,
                 hashCode: getHashCode,
-              )..addAll(_eventsList);
-
+              )..addAll(eventsList);
+              print('ここ${eventsList}');
               List getEvent(DateTime day) {
                 return _events[day] ?? [];
               }
@@ -83,8 +72,10 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
                 ),
                 TextButton(
                     onPressed: () async {
-                      await notifier
-                          .fetchScheduleList(); // addNotifier.addSchedule();
+                      eventsList = await notifier.fetchScheduleList();
+
+                      ///addエントリーで追加？　　現在一つしかはいっていない
+                      // ddNotifier.addSchedule();
                     },
                     child: Text("nasiy")),
                 SingleChildScrollView(
