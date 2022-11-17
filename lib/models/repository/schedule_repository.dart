@@ -37,7 +37,6 @@ class ScheduleRepository extends StateNotifier<Schedule> {
           await CalenderNotifier().createdList(test, time!, eventsList);
       //stateで_eventsListを作成して周回事でcopywithすればよいのでは？
     }
-    print('かか${eventsList}');
     return eventsList;
   }
 }

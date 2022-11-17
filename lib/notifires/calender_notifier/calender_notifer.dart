@@ -16,11 +16,9 @@ class CalenderNotifier extends StateNotifier<Schedule> {
       final dd = await fetchDaySchedule(element);
 
       memoIconList.add(dd);
-      print('いいい${memoIconList}');
     });
     return Future.delayed(const Duration(milliseconds: 700)).then((_) {
       eventsList.addAll({DateTime.parse(test.targetDay ?? ''): memoIconList});
-      print('えええ${eventsList}');
 
       return eventsList;
     });

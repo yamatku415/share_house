@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_house/models/entity/calender/day_schedule.dart';
 import 'package:share_house/models/repository/schedule_repository.dart';
+import 'package:share_house/pages/schedule_add_page/schedule_add_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderPage extends ConsumerStatefulWidget {
@@ -40,61 +41,62 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
     // final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
 
     return Scaffold(
-        appBar: AppBar(title: const Text('')),
-        body: ref.watch(scheduleProvider).when(
-            data: (eventsList) {
-              final _events = LinkedHashMap<DateTime, List<DaySchedule>>(
-                equals: isSameDay,
-                hashCode: getHashCode,
-              )..addAll(eventsList);
-              print('ここ${eventsList}');
-              List getEvent(DateTime day) {
-                return _events[day] ?? [];
-              }
+      appBar: AppBar(title: const Text('')),
+      body: ref.watch(scheduleProvider).when(
+          data: (eventsList) {
+            final _events = LinkedHashMap<DateTime, List<DaySchedule>>(
+              equals: isSameDay,
+              hashCode: getHashCode,
+            )..addAll(eventsList);
+            List getEvent(DateTime day) {
+              return _events[day] ?? [];
+            }
 
-              return Column(children: [
-                TableCalendar(
-                  firstDay: DateTime.utc(2022, 4, 1),
-                  lastDay: DateTime.utc(2025, 12, 31),
-                  eventLoader: getEvent,
-                  selectedDayPredicate: (day) {
-                    return isSameDay(_selected, day);
-                  },
-                  onDaySelected: (selected, focused) {
-                    if (!isSameDay(_selected, selected)) {
-                      setState(() {
-                        _selected = selected;
-                        _focused = focused;
-                      });
-                    }
-                  },
-                  focusedDay: _focused,
-                ),
-                TextButton(
-                    onPressed: () async {
-                      eventsList = await notifier.fetchScheduleList();
-
-                      ///addエントリーで追加？　　現在一つしかはいっていない
-                      // ddNotifier.addSchedule();
-                    },
-                    child: Text("nasiy")),
-                SingleChildScrollView(
-                  child: SizedBox(
-                    height: 200,
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: getEvent(_selected!)
-                          .map((event) => ListTile(
-                                leading: Text('icon'),
-                                title: Text(event.toString()),
-                              ))
-                          .toList(),
-                    ),
+            return Column(children: [
+              TableCalendar(
+                firstDay: DateTime.utc(2022, 4, 1),
+                lastDay: DateTime.utc(2025, 12, 31),
+                eventLoader: getEvent,
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selected, day);
+                },
+                onDaySelected: (selected, focused) {
+                  if (!isSameDay(_selected, selected)) {
+                    setState(() {
+                      _selected = selected;
+                      _focused = focused;
+                    });
+                  }
+                },
+                focusedDay: _focused,
+              ),
+              SingleChildScrollView(
+                child: SizedBox(
+                  height: 200,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: getEvent(_selected!)
+                        .map((event) => ListTile(
+                              leading: Text('icon'),
+                              title: Text(event.icon.toString()),
+                            ))
+                        .toList(),
                   ),
-                )
-              ]);
-            },
-            error: (e, st) => Container(),
-            loading: () => const CircularProgressIndicator()));
+                ),
+              )
+            ]);
+          },
+          error: (e, st) => Container(),
+          loading: () => const CircularProgressIndicator()),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          //追加画面への遷移処理
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return ScheduleAddPage();
+          }));
+        },
+      ),
+    );
   }
 }
