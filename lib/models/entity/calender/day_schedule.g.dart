@@ -12,6 +12,7 @@ _$_DaySchedule _$$_DayScheduleFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String?,
       memo: json['memo'] as String?,
       icon: json['icon'] as String?,
+      userName: json['userName'] as String?,
     );
 
 Map<String, dynamic> _$$_DayScheduleToJson(_$_DaySchedule instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$_DayScheduleToJson(_$_DaySchedule instance) =>
       'userId': instance.userId,
       'memo': instance.memo,
       'icon': instance.icon,
+      'userName': instance.userName,
     };

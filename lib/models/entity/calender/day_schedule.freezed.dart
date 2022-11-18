@@ -24,6 +24,7 @@ mixin _$DaySchedule {
   String? get userId => throw _privateConstructorUsedError;
   String? get memo => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
+  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,12 @@ abstract class $DayScheduleCopyWith<$Res> {
   factory $DayScheduleCopyWith(
           DaySchedule value, $Res Function(DaySchedule) then) =
       _$DayScheduleCopyWithImpl<$Res>;
-  $Res call({String? createdAt, String? userId, String? memo, String? icon});
+  $Res call(
+      {String? createdAt,
+      String? userId,
+      String? memo,
+      String? icon,
+      String? userName});
 }
 
 /// @nodoc
@@ -53,6 +59,7 @@ class _$DayScheduleCopyWithImpl<$Res> implements $DayScheduleCopyWith<$Res> {
     Object? userId = freezed,
     Object? memo = freezed,
     Object? icon = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: createdAt == freezed
@@ -71,6 +78,10 @@ class _$DayScheduleCopyWithImpl<$Res> implements $DayScheduleCopyWith<$Res> {
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -82,7 +93,12 @@ abstract class _$$_DayScheduleCopyWith<$Res>
           _$_DaySchedule value, $Res Function(_$_DaySchedule) then) =
       __$$_DayScheduleCopyWithImpl<$Res>;
   @override
-  $Res call({String? createdAt, String? userId, String? memo, String? icon});
+  $Res call(
+      {String? createdAt,
+      String? userId,
+      String? memo,
+      String? icon,
+      String? userName});
 }
 
 /// @nodoc
@@ -101,6 +117,7 @@ class __$$_DayScheduleCopyWithImpl<$Res> extends _$DayScheduleCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? memo = freezed,
     Object? icon = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_$_DaySchedule(
       createdAt: createdAt == freezed
@@ -119,6 +136,10 @@ class __$$_DayScheduleCopyWithImpl<$Res> extends _$DayScheduleCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -126,7 +147,8 @@ class __$$_DayScheduleCopyWithImpl<$Res> extends _$DayScheduleCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_DaySchedule implements _DaySchedule {
-  const _$_DaySchedule({this.createdAt, this.userId, this.memo, this.icon});
+  const _$_DaySchedule(
+      {this.createdAt, this.userId, this.memo, this.icon, this.userName});
 
   factory _$_DaySchedule.fromJson(Map<String, dynamic> json) =>
       _$$_DayScheduleFromJson(json);
@@ -139,10 +161,12 @@ class _$_DaySchedule implements _DaySchedule {
   final String? memo;
   @override
   final String? icon;
+  @override
+  final String? userName;
 
   @override
   String toString() {
-    return 'DaySchedule(createdAt: $createdAt, userId: $userId, memo: $memo, icon: $icon)';
+    return 'DaySchedule(createdAt: $createdAt, userId: $userId, memo: $memo, icon: $icon, userName: $userName)';
   }
 
   @override
@@ -153,7 +177,8 @@ class _$_DaySchedule implements _DaySchedule {
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.memo, memo) &&
-            const DeepCollectionEquality().equals(other.icon, icon));
+            const DeepCollectionEquality().equals(other.icon, icon) &&
+            const DeepCollectionEquality().equals(other.userName, userName));
   }
 
   @JsonKey(ignore: true)
@@ -163,7 +188,8 @@ class _$_DaySchedule implements _DaySchedule {
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(memo),
-      const DeepCollectionEquality().hash(icon));
+      const DeepCollectionEquality().hash(icon),
+      const DeepCollectionEquality().hash(userName));
 
   @JsonKey(ignore: true)
   @override
@@ -181,7 +207,8 @@ abstract class _DaySchedule implements DaySchedule {
       {final String? createdAt,
       final String? userId,
       final String? memo,
-      final String? icon}) = _$_DaySchedule;
+      final String? icon,
+      final String? userName}) = _$_DaySchedule;
 
   factory _DaySchedule.fromJson(Map<String, dynamic> json) =
       _$_DaySchedule.fromJson;
@@ -194,6 +221,8 @@ abstract class _DaySchedule implements DaySchedule {
   String? get memo;
   @override
   String? get icon;
+  @override
+  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$_DayScheduleCopyWith<_$_DaySchedule> get copyWith =>

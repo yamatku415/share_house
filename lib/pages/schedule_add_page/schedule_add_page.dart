@@ -1,15 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_house/models/repository/schedule_repository.dart';
+import 'package:share_house/notifires/login_notifier/login_notifer.dart';
 import 'package:share_house/pages/schedule_add_page/add_notifier.dart';
 
 class ScheduleAddPage extends ConsumerWidget {
-  ScheduleAddPage({Key? key}) : super(key: key);
+  const ScheduleAddPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(scheduleAddNotifierProvider);
     var stateNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
+    final userState = ref.watch(loginNotifierProvider);
+    String? name;
+    String? memo;
+    String? icon;
 
     return Scaffold(
       appBar: AppBar(
@@ -17,24 +21,23 @@ class ScheduleAddPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
+          Text(userState.userName ?? ''),
           TextFormField(
             onChanged: (value) {
-              state = state.copyWith(memo: value);
+              memo = value;
             },
           ),
           Row(
             children: [
               TextButton(
                 onPressed: () {
-                  state = state.copyWith(
-                      icon: 'assets/10484-heart-fluttering.json');
+                  icon = 'assets/10484-heart-fluttering.json';
                 },
                 child: const Text('heart'),
               ),
               TextButton(
                 onPressed: () {
-                  state = state.copyWith(
-                      icon: 'assets/119879-mascotas-aseguradas.json');
+                  icon = 'assets/119879-mascotas-aseguradas.json';
                 },
                 child: const Text('mascotas'),
               ),
@@ -42,10 +45,10 @@ class ScheduleAddPage extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () {
-              print('あああ${state.memo}');
-              print('いいい${state.icon}');
-
-              stateNotifier.addFireStore();
+              name = userState.userName;
+              stateNotifier.addFireStore(memo, icon, name);
+              ref.refresh(scheduleProvider);
+              Navigator.pop(context);
             },
             child: const Text('登録'),
           )

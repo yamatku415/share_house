@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:share_house/models/entity/calender/day_schedule.dart';
 import 'package:share_house/models/repository/schedule_repository.dart';
 import 'package:share_house/pages/schedule_add_page/schedule_add_page.dart';
@@ -15,10 +16,6 @@ class CalenderPage extends ConsumerStatefulWidget {
 }
 
 class _CalenderPageState extends ConsumerState<CalenderPage> {
-  //直接この値を使用する
-
-  final Map<DateTime, List<DaySchedule>> eventsList = {};
-
   DateTime _focused = DateTime.now();
 
   DateTime? _selected;
@@ -36,10 +33,6 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(calenderNotifierProvider);
-    final notifier = ref.watch(calenderNotifierProvider.notifier);
-    // final addNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
-
     return Scaffold(
       appBar: AppBar(title: const Text('')),
       body: ref.watch(scheduleProvider).when(
@@ -77,8 +70,9 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
                     shrinkWrap: true,
                     children: getEvent(_selected!)
                         .map((event) => ListTile(
-                              leading: Text('icon'),
-                              title: Text(event.icon.toString()),
+                              leading: Lottie.asset(event.icon),
+                              title: Text(event.memo.toString()),
+                              subtitle: Text(event.userName),
                             ))
                         .toList(),
                   ),
