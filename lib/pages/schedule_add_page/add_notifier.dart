@@ -11,6 +11,14 @@ final scheduleAddNotifierProvider =
 class AddNotifier extends StateNotifier<AddSchedule> {
   AddNotifier() : super(const AddSchedule());
 
+  void set(String? icon) {
+    state = state.copyWith(icon: icon);
+  }
+
+  void setMemo(String? memo) {
+    state = state.copyWith(memo: memo);
+  }
+
   Future<void> addFireStore(memo, icon, name) async {
     DateFormat format = DateFormat('yyyy-MM-dd');
     final date = format.format(DateTime.now()).toString();

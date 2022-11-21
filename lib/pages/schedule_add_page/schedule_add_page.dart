@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_house/models/repository/schedule_repository.dart';
 import 'package:share_house/notifires/login_notifier/login_notifer.dart';
 import 'package:share_house/pages/schedule_add_page/add_notifier.dart';
+import 'package:share_house/widgets/iconDialog.dart';
 
 class ScheduleAddPage extends ConsumerWidget {
   const ScheduleAddPage({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class ScheduleAddPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var stateNotifier = ref.watch(scheduleAddNotifierProvider.notifier);
+    var state = ref.watch(scheduleAddNotifierProvider);
+
     final userState = ref.watch(loginNotifierProvider);
     String? name;
     String? memo;
@@ -24,28 +27,30 @@ class ScheduleAddPage extends ConsumerWidget {
           Text(userState.userName ?? ''),
           TextFormField(
             onChanged: (value) {
-              memo = value;
+              String memoValue = value;
+              ref.read(scheduleAddNotifierProvider.notifier).setMemo(memoValue);
             },
           ),
           Row(
             children: [
               TextButton(
-                onPressed: () {
-                  icon = 'assets/10484-heart-fluttering.json';
+                onPressed: () async {
+                  await showDialog<String>(
+                      context: context,
+                      builder: (_) {
+                        return SimpleDialogSample();
+                      });
                 },
-                child: const Text('heart'),
-              ),
-              TextButton(
-                onPressed: () {
-                  icon = 'assets/119879-mascotas-aseguradas.json';
-                },
-                child: const Text('mascotas'),
+                child: const Text('アイコンを選択する'),
               ),
             ],
           ),
           TextButton(
             onPressed: () {
+              icon = state.icon.toString();
               name = userState.userName;
+              memo = state.memo.toString();
+
               stateNotifier.addFireStore(memo, icon, name);
               ref.refresh(scheduleProvider);
               Navigator.pop(context);
