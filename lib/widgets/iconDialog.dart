@@ -10,17 +10,20 @@ class SimpleDialogSample extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var stateNotifier = ref.watch(scheduleAddNotifierProvider);
+    var stateNotifier = ref.read(scheduleAddNotifierProvider.notifier);
 
     return SimpleDialog(
-      title: Text('選んでね'),
+      title: const Text(
+        'アイコンを選択してください',
+        style: TextStyle(fontSize: 16),
+      ),
       children: [
         SimpleDialogOption(
           child: Lottie.asset('assets/119879-mascotas-aseguradas.json'),
           onPressed: () {
             icon = 'assets/119879-mascotas-aseguradas.json';
 
-            ref.read(scheduleAddNotifierProvider.notifier).set(icon!);
+            stateNotifier.set(icon!);
 
             Navigator.pop(
               context,
@@ -28,11 +31,53 @@ class SimpleDialogSample extends ConsumerWidget {
           },
         ),
         SimpleDialogOption(
-          child: Text('選択肢2'),
+          child: Lottie.asset('assets/125696-please.json'),
           onPressed: () {
-            Navigator.pop(context, '2が選択されました');
+            icon = 'assets/125696-please.json';
+
+            stateNotifier.set(icon!);
+
+            Navigator.pop(
+              context,
+            );
           },
-        )
+        ),
+        SimpleDialogOption(
+          child: Lottie.asset('assets/118903-alcohol.json'),
+          onPressed: () {
+            icon = 'assets/118903-alcohol.json';
+
+            stateNotifier.set(icon!);
+
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
+        SimpleDialogOption(
+          child: Lottie.asset('assets/12690-love-story.json'),
+          onPressed: () {
+            icon = 'assets/12690-love-story.json';
+
+            stateNotifier.set(icon!);
+
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
+        SimpleDialogOption(
+          child: Lottie.asset('assets/72765-work-from-home.json'),
+          onPressed: () {
+            icon = 'assets/72765-work-from-home.json';
+
+            stateNotifier.set(icon!);
+
+            Navigator.pop(
+              context,
+            );
+          },
+        ),
       ],
     );
   }
