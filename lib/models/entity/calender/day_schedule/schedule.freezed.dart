@@ -23,6 +23,7 @@ mixin _$Schedule {
   String? get targetDay => throw _privateConstructorUsedError;
   List<String>? get idList => throw _privateConstructorUsedError;
   String? get elementIdList => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,11 @@ mixin _$Schedule {
 abstract class $ScheduleCopyWith<$Res> {
   factory $ScheduleCopyWith(Schedule value, $Res Function(Schedule) then) =
       _$ScheduleCopyWithImpl<$Res>;
-  $Res call({String? targetDay, List<String>? idList, String? elementIdList});
+  $Res call(
+      {String? targetDay,
+      List<String>? idList,
+      String? elementIdList,
+      String? groupId});
 }
 
 /// @nodoc
@@ -50,6 +55,7 @@ class _$ScheduleCopyWithImpl<$Res> implements $ScheduleCopyWith<$Res> {
     Object? targetDay = freezed,
     Object? idList = freezed,
     Object? elementIdList = freezed,
+    Object? groupId = freezed,
   }) {
     return _then(_value.copyWith(
       targetDay: targetDay == freezed
@@ -64,6 +70,10 @@ class _$ScheduleCopyWithImpl<$Res> implements $ScheduleCopyWith<$Res> {
           ? _value.elementIdList
           : elementIdList // ignore: cast_nullable_to_non_nullable
               as String?,
+      groupId: groupId == freezed
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -74,7 +84,11 @@ abstract class _$$_ScheduleCopyWith<$Res> implements $ScheduleCopyWith<$Res> {
           _$_Schedule value, $Res Function(_$_Schedule) then) =
       __$$_ScheduleCopyWithImpl<$Res>;
   @override
-  $Res call({String? targetDay, List<String>? idList, String? elementIdList});
+  $Res call(
+      {String? targetDay,
+      List<String>? idList,
+      String? elementIdList,
+      String? groupId});
 }
 
 /// @nodoc
@@ -92,6 +106,7 @@ class __$$_ScheduleCopyWithImpl<$Res> extends _$ScheduleCopyWithImpl<$Res>
     Object? targetDay = freezed,
     Object? idList = freezed,
     Object? elementIdList = freezed,
+    Object? groupId = freezed,
   }) {
     return _then(_$_Schedule(
       targetDay: targetDay == freezed
@@ -106,6 +121,10 @@ class __$$_ScheduleCopyWithImpl<$Res> extends _$ScheduleCopyWithImpl<$Res>
           ? _value.elementIdList
           : elementIdList // ignore: cast_nullable_to_non_nullable
               as String?,
+      groupId: groupId == freezed
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -114,7 +133,10 @@ class __$$_ScheduleCopyWithImpl<$Res> extends _$ScheduleCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Schedule implements _Schedule {
   const _$_Schedule(
-      {this.targetDay, final List<String>? idList, this.elementIdList})
+      {this.targetDay,
+      final List<String>? idList,
+      this.elementIdList,
+      this.groupId})
       : _idList = idList;
 
   factory _$_Schedule.fromJson(Map<String, dynamic> json) =>
@@ -133,10 +155,12 @@ class _$_Schedule implements _Schedule {
 
   @override
   final String? elementIdList;
+  @override
+  final String? groupId;
 
   @override
   String toString() {
-    return 'Schedule(targetDay: $targetDay, idList: $idList, elementIdList: $elementIdList)';
+    return 'Schedule(targetDay: $targetDay, idList: $idList, elementIdList: $elementIdList, groupId: $groupId)';
   }
 
   @override
@@ -147,7 +171,8 @@ class _$_Schedule implements _Schedule {
             const DeepCollectionEquality().equals(other.targetDay, targetDay) &&
             const DeepCollectionEquality().equals(other._idList, _idList) &&
             const DeepCollectionEquality()
-                .equals(other.elementIdList, elementIdList));
+                .equals(other.elementIdList, elementIdList) &&
+            const DeepCollectionEquality().equals(other.groupId, groupId));
   }
 
   @JsonKey(ignore: true)
@@ -156,7 +181,8 @@ class _$_Schedule implements _Schedule {
       runtimeType,
       const DeepCollectionEquality().hash(targetDay),
       const DeepCollectionEquality().hash(_idList),
-      const DeepCollectionEquality().hash(elementIdList));
+      const DeepCollectionEquality().hash(elementIdList),
+      const DeepCollectionEquality().hash(groupId));
 
   @JsonKey(ignore: true)
   @override
@@ -173,7 +199,8 @@ abstract class _Schedule implements Schedule {
   const factory _Schedule(
       {final String? targetDay,
       final List<String>? idList,
-      final String? elementIdList}) = _$_Schedule;
+      final String? elementIdList,
+      final String? groupId}) = _$_Schedule;
 
   factory _Schedule.fromJson(Map<String, dynamic> json) = _$_Schedule.fromJson;
 
@@ -183,6 +210,8 @@ abstract class _Schedule implements Schedule {
   List<String>? get idList;
   @override
   String? get elementIdList;
+  @override
+  String? get groupId;
   @override
   @JsonKey(ignore: true)
   _$$_ScheduleCopyWith<_$_Schedule> get copyWith =>

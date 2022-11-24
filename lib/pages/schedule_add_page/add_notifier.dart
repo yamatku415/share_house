@@ -20,12 +20,15 @@ class AddNotifier extends StateNotifier<AddSchedule> {
   }
 
   Future<void> addFireStore(memo, icon, name) async {
+    String docGropeId = '';
+
     DateFormat format = DateFormat('yyyy-MM-dd');
     final date = format.format(DateTime.now()).toString();
     final schedule = FirebaseFirestore.instance.collection('daySchedule').doc();
 
-    final users = FirebaseFirestore.instance.collection('schedule');
-    final userId = users.doc(FirebaseAuth.instance.currentUser!.uid).id;
+    final users =
+        FirebaseFirestore.instance.collection('groupIds').doc(docGropeId);
+    final userId = FirebaseAuth.instance.currentUser!.uid;
 
     schedule.set({
       'memo': memo,
@@ -35,7 +38,13 @@ class AddNotifier extends StateNotifier<AddSchedule> {
       'userId': userId,
     }, SetOptions(merge: true));
 
-    users.doc('${format.format(DateTime.now()).toString()}$userId').set({
+    users.set(
+      {
+        'groupId': docGropeId,
+      },
+    );
+
+    users.collection('schedule').doc(date).set({
       'idList': FieldValue.arrayUnion([schedule.id]),
       'targetDay': date,
     }, SetOptions(merge: true));

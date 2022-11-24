@@ -5,11 +5,11 @@ part 'schedule.g.dart';
 
 @freezed
 class Schedule with _$Schedule {
-  const factory Schedule({
-    String? targetDay,
-    List<String>? idList,
-    String? elementIdList,
-  }) = _Schedule;
+  const factory Schedule(
+      {String? targetDay,
+      List<String>? idList,
+      String? elementIdList,
+      String? groupId}) = _Schedule;
   factory Schedule.fromJson(Map<String, dynamic> json) =>
       _$ScheduleFromJson(json);
 }

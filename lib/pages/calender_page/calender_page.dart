@@ -27,7 +27,6 @@ class _CalenderPageState extends ConsumerState<CalenderPage> {
   @override
   void initState() {
     super.initState();
-
     _selected = _focused;
   }
 

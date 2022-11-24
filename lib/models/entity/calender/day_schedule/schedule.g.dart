@@ -11,6 +11,7 @@ _$_Schedule _$$_ScheduleFromJson(Map<String, dynamic> json) => _$_Schedule(
       idList:
           (json['idList'] as List<dynamic>?)?.map((e) => e as String).toList(),
       elementIdList: json['elementIdList'] as String?,
+      groupId: json['groupId'] as String?,
     );
 
 Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
       'targetDay': instance.targetDay,
       'idList': instance.idList,
       'elementIdList': instance.elementIdList,
+      'groupId': instance.groupId,
     };
