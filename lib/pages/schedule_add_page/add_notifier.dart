@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:share_house/pages/group_create_page/group_create_notifier.dart';
 import 'package:share_house/pages/schedule_add_page/state/add_schedule_state.dart';
 
 final scheduleAddNotifierProvider =
@@ -26,8 +27,9 @@ class AddNotifier extends StateNotifier<AddSchedule> {
     final date = format.format(DateTime.now()).toString();
     final schedule = FirebaseFirestore.instance.collection('daySchedule').doc();
 
-    final users =
-        FirebaseFirestore.instance.collection('groupIds').doc(docGropeId);
+    final users = FirebaseFirestore.instance
+        .collection('groupIds')
+        .doc(await GroupCreateNotifier().getDate());
     final userId = FirebaseAuth.instance.currentUser!.uid;
 
     schedule.set({

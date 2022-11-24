@@ -33,7 +33,7 @@ class _GroupCreatePageState extends ConsumerState<GroupCreatePage> {
           Text('グループIDを"$groupId"で登録します'),
           TextButton(
               onPressed: () {
-                // state.setData(groupId!);
+                state.setData(groupId!);
 
                 Future.delayed(const Duration(milliseconds: 3000)).then((_) {
                   Navigator.of(context)

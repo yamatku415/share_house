@@ -24,7 +24,6 @@ class ScheduleRepository extends StateNotifier<Schedule> {
   Future<Map<DateTime, List<DaySchedule>>> fetchScheduleList() async {
     Map<DateTime, List<DaySchedule>> eventsList = {};
 
-    print('あああ${state.groupId}');
     final snapshot = await FirebaseFirestore.instance
         .collection('groupIds')
         .doc(await GroupCreateNotifier().getDate())
